@@ -1,3 +1,160 @@
 ---
+const links = [
+  { label: 's3bc40@gmail.com',                 href: 'mailto:s3bc40@gmail.com',                    prefix: '→' },
+  { label: 'github.com/s3bc40',               href: 'https://github.com/s3bc40',                  prefix: '→' },
+  { label: 'linkedin.com/in/sgoncalvesclaro', href: 'https://linkedin.com/in/sgoncalvesclaro',    prefix: '→' },
+  { label: 'malt [soon]',                     href: null,                                          prefix: '→' },
+];
 ---
-<!-- Contact — coming next -->
+
+<section id="contact">
+  <div class="container-text">
+    <p class="section-label">// contact</p>
+
+    <div class="contact-status">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span class="status-text">Available for missions</span>
+    </div>
+
+    <p class="contact-intro">
+      Async first — I respond to most messages within 24h. Open to freelance contracts,
+      CDI, and technical conversations. Hybrid from les Landes or fully remote.
+    </p>
+
+    <ul class="contact-links" role="list">
+      {links.map((l) => (
+        <li>
+          {l.href ? (
+            <a
+              href={l.href}
+              class="contact-link"
+              target={l.href.startsWith('mailto') ? undefined : '_blank'}
+              rel={l.href.startsWith('mailto') ? undefined : 'noopener'}
+            >
+              <span class="link-prefix" aria-hidden="true">{l.prefix}</span>
+              <span class="link-label">{l.label}</span>
+            </a>
+          ) : (
+            <span class="contact-link contact-link--soon">
+              <span class="link-prefix" aria-hidden="true">{l.prefix}</span>
+              <span class="link-label">{l.label}</span>
+            </span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-text">s3bc40 · built with Astro · deployed on AWS</p>
+</footer>
+
+<style>
+  #contact {
+    padding-block: 4.5rem 3.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Availability status ────────────────────── */
+  .contact-status {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #4ade80; /* green */
+    flex-shrink: 0;
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0   rgba(74, 222, 128, 0.45); }
+    60%  { box-shadow: 0 0 0 7px rgba(74, 222, 128, 0); }
+    100% { box-shadow: 0 0 0 0   rgba(74, 222, 128, 0); }
+  }
+
+  .status-text {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: #4ade80;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Intro ──────────────────────────────────── */
+  .contact-intro {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+
+  /* ── Link list ──────────────────────────────── */
+  .contact-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 44px;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 150ms ease, border-color 150ms ease;
+  }
+
+  li:first-child .contact-link {
+    border-top: 1px solid var(--border);
+  }
+
+  li .contact-link {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .contact-link:not(.contact-link--soon):hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .link-prefix {
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .contact-link--soon {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  /* ── Footer ─────────────────────────────────── */
+  footer {
+    padding-block: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-text {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  /* ── Responsive ─────────────────────────────── */
+  @media (max-width: 479px) {
+    #contact {
+      padding-block: 3.5rem 2.5rem;
+    }
+  }
+</style>
