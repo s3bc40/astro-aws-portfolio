@@ -1,0 +1,113 @@
+---
+const stack = [
+  {
+    category: 'Languages',
+    items: ['Python', 'Rust', 'TypeScript', 'Bash'],
+  },
+  {
+    category: 'Frontend',
+    items: ['Vue.js', 'React', 'Astro'],
+  },
+  {
+    category: 'Backend',
+    items: ['FastAPI', 'Node.js', 'PostgreSQL', 'Redis'],
+  },
+  {
+    category: 'Cloud',
+    items: ['AWS S3', 'CloudFront', 'Lambda', 'Route 53', 'EC2'],
+  },
+  {
+    category: 'Tooling',
+    items: ['Claude Code', 'Docker', 'Git', 'Linux'],
+  },
+];
+---
+
+<section id="stack">
+  <div class="container-projects">
+    <p class="section-label">// stack</p>
+
+    <div class="stack-rows">
+      {stack.map(({ category, items }) => (
+        <div class="stack-row">
+          <span class="stack-category">{category}</span>
+          <div class="stack-chips">
+            {items.map((item) => (
+              <span class="chip">{item}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  #stack {
+    padding-block: 4.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Rows ───────────────────────────────────── */
+  .stack-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .stack-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    align-items: start;
+    gap: 1.5rem;
+  }
+
+  .stack-category {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding-top: 0.35rem; /* align with chip text */
+    white-space: nowrap;
+  }
+
+  /* ── Chips ──────────────────────────────────── */
+  .stack-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.25rem 0.65rem;
+    transition: border-color 150ms ease, color 150ms ease;
+  }
+
+  .chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── Responsive ─────────────────────────────── */
+  @media (max-width: 479px) {
+    #stack {
+      padding-block: 3.5rem;
+    }
+
+    .stack-row {
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+
+    .stack-category {
+      padding-top: 0;
+    }
+  }
+</style>
