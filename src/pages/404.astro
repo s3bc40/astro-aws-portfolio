@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="404 — s3bc40" description="Page not found.">
+  <main id="not-found">
+    <div class="container-text">
+
+      <p class="section-label in-view">// 404</p>
+
+      <p class="nf-heading">page not found</p>
+
+      <p class="nf-prompt">
+        <span class="accent">$</span>
+        <span class="muted"> &gt; </span>
+        <span class="muted">the path you're looking for doesn't exist.</span>
+      </p>
+
+      <a href="/" class="nf-back">→ back to home</a>
+
+    </div>
+  </main>
+</Base>
+
+<style>
+  #not-found {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding-block: 4rem;
+  }
+
+  .nf-heading {
+    font-family: var(--font-mono);
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .nf-prompt {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .nf-prompt .accent { color: var(--accent); }
+  .nf-prompt .muted  { color: var(--muted); }
+
+  .nf-back {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    padding: 0.55rem 1.1rem;
+    border-radius: 4px;
+    transition: background-color 150ms ease, color 150ms ease;
+    display: inline-block;
+  }
+
+  .nf-back:hover {
+    background-color: var(--accent);
+    color: var(--bg);
+  }
+</style>
