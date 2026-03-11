@@ -1,0 +1,178 @@
+---
+---
+
+<nav id="nav">
+  <a class="nav-brand" href="/">s3bc40</a>
+
+  <!-- Desktop links -->
+  <div class="nav-links">
+    <a href="https://github.com/s3bc40" target="_blank" rel="noopener">GitHub</a>
+    <a href="mailto:contact@s3bc40.com">contact@s3bc40.com</a>
+  </div>
+
+  <!-- Mobile hamburger -->
+  <button
+    class="nav-hamburger"
+    aria-label="Toggle menu"
+    aria-expanded="false"
+    aria-controls="nav-mobile-menu"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- Mobile slide-down menu -->
+<div id="nav-mobile-menu" class="nav-mobile-menu" hidden>
+  <a href="https://github.com/s3bc40" target="_blank" rel="noopener">GitHub</a>
+  <a href="mailto:contact@s3bc40.com">contact@s3bc40.com</a>
+</div>
+
+<style>
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: var(--bg);
+    transition: border-bottom 150ms ease;
+  }
+
+  nav.scrolled {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-brand {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--text);
+  }
+
+  /* Hamburger — hidden on desktop */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 22px;
+    height: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .nav-hamburger span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: var(--text);
+    border-radius: 1px;
+    transition: transform 200ms ease, opacity 200ms ease;
+  }
+
+  /* Active hamburger → X */
+  .nav-hamburger[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-hamburger[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-hamburger[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile menu */
+  .nav-mobile-menu {
+    position: sticky;
+    top: 56px; /* nav height */
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    animation: slideDown 200ms ease forwards;
+  }
+
+  .nav-mobile-menu[hidden] {
+    display: none;
+  }
+
+  .nav-mobile-menu a {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--muted);
+    padding: 0.875rem 2rem;
+    border-top: 1px solid var(--border);
+    transition: color 150ms ease, background-color 150ms ease;
+  }
+
+  .nav-mobile-menu a:hover {
+    color: var(--text);
+    background-color: var(--bg);
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ─────────────────────────────── */
+  @media (max-width: 479px) {
+    nav {
+      padding: 1rem 1.25rem;
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    .nav-hamburger {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  // Scroll border
+  const nav = document.getElementById('nav')!;
+  const onScroll = () => {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Hamburger toggle
+  const btn = nav.querySelector<HTMLButtonElement>('.nav-hamburger')!;
+  const menu = document.getElementById('nav-mobile-menu')!;
+
+  btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    menu.hidden = open;
+  });
+</script>
