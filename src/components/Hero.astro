@@ -1,3 +1,512 @@
 ---
 ---
-<!-- Hero — coming next -->
+
+<section id="hero">
+
+  <!-- Subtle grid pattern behind the terminal -->
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <div class="terminal-wrapper">
+    <div class="terminal-window">
+
+      <!-- macOS-style chrome bar -->
+      <div class="terminal-header" aria-hidden="true">
+        <div class="terminal-dots">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+        <span class="terminal-title">s3bc40@portfolio: ~</span>
+      </div>
+
+      <!-- Terminal body -->
+      <div class="terminal-body">
+
+        <!-- Boot sequence (decorative, hidden from assistive tech) -->
+        <div id="boot-seq" class="boot-seq" aria-hidden="true"></div>
+
+        <!-- Main content — invisible until boot completes -->
+        <div class="hero-content" id="hero-content" aria-hidden="true">
+
+          <p class="hero-prompt anim" style="--delay: 0ms">
+            <span class="accent">$</span>
+            <span class="muted"> &gt; </span>
+            <span class="accent">developer</span>
+          </p>
+
+          <h1 class="hero-name anim" style="--delay: 150ms">
+            Sébastien Claro<span class="muted"> / </span>s3bc40
+          </h1>
+
+          <p class="hero-tagline anim" style="--delay: 300ms" aria-live="polite">
+            <span id="typewriter"></span><span class="cursor" aria-hidden="true">█</span>
+          </p>
+
+          <p class="hero-subline anim" style="--delay: 500ms">
+            Open to freelance missions and CDI opportunities. Hybrid, les Landes FR.
+          </p>
+
+          <div class="hero-ctas anim" style="--delay: 650ms">
+            <a href="#projects" class="cta-primary">→ View projects</a>
+            <a href="https://github.com/s3bc40" target="_blank" rel="noopener" class="cta-secondary">→ GitHub</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll-cue" id="hero-scroll-cue" aria-hidden="true">
+    <span class="scroll-arrow">↓</span>
+  </div>
+
+</section>
+
+<style>
+  /* ── Layout ─────────────────────────────────── */
+  #hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding-block: 4.5rem 2.5rem;
+    overflow: hidden;
+  }
+
+  /* Grid dot pattern */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245, 158, 11, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 158, 11, 0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 75% 75% at 50% 45%, black 20%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 45%, black 20%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* Amber ambient glow */
+  #hero::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(245, 158, 11, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ── Terminal wrapper (centers the window) ── */
+  .terminal-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 1.25rem;
+    z-index: 1;
+  }
+
+  /* ── Terminal window ────────────────────────── */
+  .terminal-window {
+    width: 100%;
+    max-width: 680px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.04),
+      0 24px 60px rgba(0, 0, 0, 0.65),
+      0 0 40px rgba(245, 158, 11, 0.04);
+  }
+
+  /* ── Chrome bar ─────────────────────────────── */
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 1rem;
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--border);
+    user-select: none;
+  }
+
+  .terminal-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .dot-red    { background-color: #ff5f57; }
+  .dot-yellow { background-color: #febc2e; }
+  .dot-green  { background-color: #28c840; }
+
+  .terminal-title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    flex: 1;
+    text-align: center;
+    padding-right: 54px; /* optically center past the dots */
+  }
+
+  /* ── Terminal body ──────────────────────────── */
+  .terminal-body {
+    position: relative;
+    background-color: var(--bg);
+    padding: 1.75rem 2rem;
+    min-height: 260px; /* holds layout steady during boot → content swap */
+  }
+
+  /* ── Boot sequence ──────────────────────────── */
+  .boot-seq {
+    position: absolute;
+    inset: 0;
+    padding: 1.75rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    transition: opacity 200ms ease;
+  }
+
+  :global(.boot-line) {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--muted);
+    white-space: pre;
+    line-height: 1.6;
+  }
+
+  :global(.boot-line .ok)  { color: #28c840; }
+  :global(.boot-line .cmd) { color: var(--accent); }
+
+  /* ── Hero content ───────────────────────────── */
+  .hero-content {
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .hero-content.visible {
+    visibility: visible;
+  }
+
+  /* ── Entrance animations ────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .anim {
+    opacity: 0;
+    animation: fadeUp 480ms ease forwards;
+    animation-delay: var(--delay, 0ms);
+    animation-play-state: paused;
+  }
+
+  .hero-content.running .anim {
+    animation-play-state: running;
+  }
+
+  /* ── Prompt ─────────────────────────────────── */
+  .hero-prompt {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+  }
+
+  .hero-prompt .accent { color: var(--accent); }
+  .hero-prompt .muted  { color: var(--muted); }
+
+  /* ── Name ───────────────────────────────────── */
+  .hero-name {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(2rem, 6vw, 4rem);
+    line-height: 1.1;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    padding-left: 0.75rem;
+    border-left: 3px solid var(--accent);
+  }
+
+  .hero-name .muted { color: var(--muted); }
+
+  /* Periodic glitch — added via JS after fadeUp completes */
+  @keyframes name-glitch {
+    0%, 88%, 100% {
+      text-shadow: none;
+      transform: none;
+      filter: none;
+    }
+    90% {
+      text-shadow: -3px 0 var(--accent), 3px 0 #59c2ff;
+      transform: translateX(3px);
+      filter: brightness(1.25);
+    }
+    91% {
+      text-shadow: 3px 0 var(--accent), -3px 0 #59c2ff;
+      transform: translateX(-3px);
+    }
+    92% {
+      text-shadow: none;
+      transform: none;
+      filter: none;
+    }
+    94% {
+      text-shadow: -1px 0 var(--accent);
+      transform: translateX(1px);
+    }
+    95% {
+      text-shadow: none;
+      transform: none;
+      filter: none;
+    }
+  }
+
+  .hero-name.glitch {
+    opacity: 1; /* prevent fadeUp forwards fill from being wiped */
+    animation: name-glitch 9s ease-in-out infinite;
+  }
+
+  /* ── Tagline / typewriter ───────────────────── */
+  .hero-tagline {
+    font-family: var(--font-mono);
+    font-size: clamp(0.875rem, 2.4vw, 1rem);
+    color: var(--text);
+    line-height: 1.55;
+    min-height: 1.6em;
+  }
+
+  .cursor {
+    display: inline-block;
+    color: var(--accent);
+    animation: blink 1s step-start infinite;
+    margin-left: 1px;
+  }
+
+  .cursor.done {
+    animation: none;
+    opacity: 1;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  /* ── Subline ────────────────────────────────── */
+  .hero-subline {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ── CTAs ───────────────────────────────────── */
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+  }
+
+  .cta-primary,
+  .cta-secondary {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 4px;
+    border: 1px solid;
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+  }
+
+  .cta-primary {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .cta-primary:hover {
+    background-color: var(--accent);
+    color: var(--bg);
+  }
+
+  .cta-secondary {
+    color: var(--muted);
+    border-color: var(--border);
+  }
+
+  .cta-secondary:hover {
+    color: var(--text);
+    border-color: var(--muted);
+  }
+
+  /* ── Scroll cue ─────────────────────────────── */
+  .hero-scroll-cue {
+    text-align: center;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 600ms ease;
+  }
+
+  .hero-scroll-cue.visible {
+    opacity: 1;
+  }
+
+  .scroll-arrow {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--muted);
+    display: inline-block;
+    animation: scrollBounce 2.4s ease-in-out infinite;
+  }
+
+  @keyframes scrollBounce {
+    0%, 100% { transform: translateY(0);   opacity: 0.45; }
+    50%       { transform: translateY(7px); opacity: 1; }
+  }
+
+  /* ── Responsive ─────────────────────────────── */
+  @media (max-width: 479px) {
+    #hero {
+      padding-block: 4rem 2rem;
+    }
+
+    .terminal-body {
+      padding: 1.25rem;
+    }
+
+    .boot-seq {
+      padding: 1.25rem;
+    }
+
+    .hero-ctas {
+      flex-direction: column;
+    }
+
+    .cta-primary,
+    .cta-secondary {
+      text-align: center;
+    }
+  }
+
+  /* ── Reduced motion ─────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .anim        { animation: none; opacity: 1; }
+    .cursor      { animation: none; }
+    .scroll-arrow { animation: none; opacity: 0.6; }
+    .hero-name.glitch { animation: none; }
+  }
+</style>
+
+<script>
+  const sleep = (ms: number) => new Promise<void>(r => setTimeout(r, ms));
+
+  const TYPEWRITER_TEXT  = "I build MVPs and tools fast — AI-orchestrated, production-ready, no fluff.";
+  const TYPEWRITER_SPEED = 38;
+
+  function startTypewriter() {
+    const el     = document.getElementById('typewriter')!;
+    const cursor = document.querySelector<HTMLElement>('.cursor')!;
+    let i = 0;
+    function tick() {
+      if (i < TYPEWRITER_TEXT.length) {
+        el.textContent += TYPEWRITER_TEXT[i++];
+        setTimeout(tick, TYPEWRITER_SPEED);
+      } else {
+        cursor.classList.add('done');
+      }
+    }
+    tick();
+  }
+
+  async function runBoot() {
+    const bootSeq    = document.getElementById('boot-seq')!;
+    const heroContent = document.getElementById('hero-content')!;
+    const scrollCue  = document.getElementById('hero-scroll-cue')!;
+
+    // Skip boot for users who prefer reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      bootSeq.remove();
+      heroContent.classList.add('visible', 'running');
+      heroContent.removeAttribute('aria-hidden');
+      scrollCue.classList.add('visible');
+      startTypewriter();
+      return;
+    }
+
+    const CHAR_SPEED = 9; // ms per character
+
+    async function typeLine(text: string, className = '') {
+      const line = document.createElement('div');
+      line.className = 'boot-line';
+      bootSeq.appendChild(line);
+      for (const char of text) {
+        line.innerHTML = (className
+          ? `<span class="${className}">${line.textContent}${char}</span>`
+          : (line.textContent ?? '') + char);
+        // For spans, we need to track textContent differently
+        await sleep(CHAR_SPEED);
+      }
+    }
+
+    // Simplified version: build HTML directly
+    async function typeRawLine(html: string) {
+      const line = document.createElement('div');
+      line.className = 'boot-line';
+      bootSeq.appendChild(line);
+      // Strip tags to get plain text for typing
+      const tmp = document.createElement('div');
+      tmp.innerHTML = html;
+      const plain = tmp.textContent ?? '';
+      for (let i = 0; i <= plain.length; i++) {
+        line.textContent = plain.slice(0, i);
+        await sleep(CHAR_SPEED);
+      }
+      // Set final HTML with markup
+      line.innerHTML = html;
+    }
+
+    await typeRawLine('<span class="cmd">&gt; boot portfolio.js</span>');
+    await sleep(60);
+    await typeRawLine('  <span class="ok">✓</span> modules loaded');
+    await sleep(60);
+    await typeRawLine('  <span class="ok">✓</span> status: available');
+    await sleep(60);
+    await typeRawLine('  <span class="ok">✓</span> ready — launching...');
+    await sleep(320);
+
+    // Fade out boot sequence
+    (bootSeq as HTMLElement).style.opacity = '0';
+    (bootSeq as HTMLElement).style.transition = 'opacity 180ms ease';
+    await sleep(200);
+    bootSeq.remove();
+
+    // Show and animate hero content
+    heroContent.classList.add('visible');
+    heroContent.removeAttribute('aria-hidden');
+
+    requestAnimationFrame(() => {
+      heroContent.classList.add('running');
+    });
+
+    // Start typewriter after tagline animates in (300ms delay + 480ms duration)
+    setTimeout(startTypewriter, 830);
+
+    // Add glitch to hero name after it has animated in (150ms delay + 480ms)
+    setTimeout(() => {
+      document.querySelector<HTMLElement>('.hero-name')?.classList.add('glitch');
+    }, 1500);
+
+    // Show scroll cue after everything has settled
+    setTimeout(() => scrollCue.classList.add('visible'), 2400);
+  }
+
+  runBoot();
+</script>
