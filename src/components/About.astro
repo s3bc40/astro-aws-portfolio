@@ -1,3 +1,116 @@
 ---
+const glance = [
+  { label: 'Available',  value: 'Freelance · CDI' },
+  { label: 'Location',   value: 'Les Landes, FR — Remote · Hybrid' },
+  { label: 'Languages',  value: 'FR / EN' },
+  { label: 'Setup',      value: 'Micro-entreprise' },
+  { label: 'Mail',       value: 's3bc40@gmail.com' },
+];
 ---
-<!-- About — coming next -->
+
+<section id="about">
+  <div class="container-text">
+    <p class="section-label">// about</p>
+
+    <div class="about-body">
+      <p>
+        Full stack developer with 4 years of experience. I build MVPs, CLI tools, and internal
+        tools fast — using AI-orchestrated development with Claude Code. I care about shipping
+        things that work, not over-engineering things that don't need to exist.
+      </p>
+      <p>
+        My workflow is async-first, heavily terminal-based, and increasingly AI-augmented.
+        I treat Claude Code as a pair programmer — I stay in the driver's seat on architecture
+        and decisions, it handles the volume.
+      </p>
+    </div>
+
+    <dl class="glance-grid">
+      {glance.map(({ label, value }) => (
+        <>
+          <dt>{label}</dt>
+          <dd>{value}</dd>
+        </>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<style>
+  #about {
+    padding-block: 4.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .about-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .about-body p {
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.75;
+  }
+
+  /* ── At a glance grid ───────────────────────── */
+  .glance-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .glance-grid dt,
+  .glance-grid dd {
+    padding: 0.65rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .glance-grid dt:last-of-type,
+  .glance-grid dd:last-of-type {
+    border-bottom: none;
+  }
+
+  .glance-grid dt {
+    color: var(--muted);
+    background-color: var(--surface);
+    white-space: nowrap;
+    border-right: 1px solid var(--border);
+    font-weight: 400;
+  }
+
+  .glance-grid dd {
+    color: var(--text);
+    background-color: var(--bg);
+  }
+
+  /* ── Responsive ─────────────────────────────── */
+  @media (max-width: 479px) {
+    #about {
+      padding-block: 3.5rem;
+    }
+
+    .glance-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .glance-grid dt {
+      border-right: none;
+      border-bottom: none;
+      padding-bottom: 0.2rem;
+      color: var(--accent);
+    }
+
+    .glance-grid dd {
+      padding-top: 0.2rem;
+    }
+  }
+</style>
