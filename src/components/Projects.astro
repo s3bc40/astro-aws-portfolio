@@ -1,3 +1,229 @@
 ---
+interface Link {
+  label: string;
+  href: string;
+}
+
+interface Project {
+  name: string;
+  lang: string;
+  path: string;
+  description: string;
+  buildNote?: string;
+  links?: Link[];
+  command?: string;
+  comingSoon?: boolean;
+}
+
+const projects: Project[] = [
+  {
+    name: 'DevBrief',
+    lang: 'Python',
+    path: '~/projects/devbrief',
+    description: 'Generates a human-readable brief for any GitHub repo. AI-powered, PyPI published.',
+    buildNote: 'Built in 2 days with Claude Code.',
+    links: [
+      { label: 'GitHub ↗', href: 'https://github.com/s3bc40/devbrief' },
+      { label: 'PyPI ↗',   href: 'https://pypi.org/project/devbrief' },
+    ],
+    command: 'uvx devbrief <github-url>',
+  },
+  {
+    name: 'txdecode',
+    lang: 'Rust',
+    path: '~/projects/txdecode',
+    description: 'Blazing fast EVM transaction decoder. Pure Rust.',
+    links: [
+      { label: 'GitHub ↗',     href: 'https://github.com/s3bc40/txdecode' },
+      { label: 'crates.io ↗',  href: 'https://crates.io/crates/txdecode' },
+    ],
+  },
+  {
+    name: '[Next project]',
+    lang: '?',
+    path: '~/projects/...',
+    description: 'Coming soon.',
+    comingSoon: true,
+  },
+];
 ---
-<!-- Projects — coming next -->
+
+<section id="projects">
+  <div class="container-projects">
+    <p class="section-label">// projects</p>
+
+    <div class="card-stack">
+      {projects.map((p) => (
+        <article class:list={['card', { 'card--soon': p.comingSoon }]}>
+
+          <p class="card-path">{p.path}</p>
+
+          <header class="card-header">
+            <span class="card-name">{p.name}</span>
+            <span class="card-lang">[{p.lang}]</span>
+          </header>
+
+          <p class="card-desc">{p.description}</p>
+
+          {p.buildNote && (
+            <p class="card-build-note">{p.buildNote}</p>
+          )}
+
+          {(p.links || p.command) && (
+            <footer class="card-footer">
+              {p.links && (
+                <div class="card-links">
+                  {p.links.map((l) => (
+                    <a href={l.href} target="_blank" rel="noopener" class="card-link">
+                      {l.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+              {p.command && (
+                <code class="card-command">{p.command}</code>
+              )}
+            </footer>
+          )}
+
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  #projects {
+    padding-block: 4.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* ── Card ───────────────────────────────────── */
+  .card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent-dim);
+    border-radius: 6px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .card:not(.card--soon):hover {
+    border-color: var(--accent);
+    border-left-color: var(--accent);
+    box-shadow: 0 4px 24px rgba(245, 158, 11, 0.08);
+  }
+
+  /* Coming soon — visually dimmed, no interaction */
+  .card--soon {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  /* ── Card path ─────────────────────────────── */
+  .card-path {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    opacity: 0.6;
+    margin-bottom: -0.25rem;
+  }
+
+  /* ── Card header ────────────────────────────── */
+  .card-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .card-name {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .card-lang {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* ── Description ────────────────────────────── */
+  .card-desc {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── Build note ─────────────────────────────── */
+  .card-build-note {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent-dim);
+  }
+
+  /* ── Footer: links + command ────────────────── */
+  .card-footer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  .card-links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .card-link {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .card-link:hover {
+    color: var(--accent);
+  }
+
+  .card-command {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent-dim);
+    background-color: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.2em 0.55em;
+    white-space: nowrap;
+  }
+
+  /* ── Responsive ─────────────────────────────── */
+  @media (max-width: 479px) {
+    #projects {
+      padding-block: 3.5rem;
+    }
+
+    .card {
+      padding: 1.25rem;
+    }
+
+    .card-command {
+      white-space: normal;
+      word-break: break-all;
+    }
+  }
+</style>
