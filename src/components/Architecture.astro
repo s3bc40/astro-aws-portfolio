@@ -1,0 +1,94 @@
+---
+const diagram = `\
+┌─────────────┐     git push      ┌──────────────────┐
+│   GitHub    │ ─────────────────▶│  GitHub Actions  │
+│ portfolio-  │                   │  OIDC → AWS STS  │
+│   astro     │                   │  npm run build   │
+└─────────────┘                   └────────┬─────────┘
+                                           │ s3 sync
+                                           ▼
+                             ┌──────────────────┐
+                             │   S3 Bucket      │
+                             │   (private, OAC) │
+                             └────────┬─────────┘
+                                      │ OAC
+                                      ▼
+                             ┌──────────────────┐
+                             │   CloudFront     │
+                             │   HTTPS TLS 1.3  │
+                             └────────┬─────────┘
+                                      │
+                                      ▼
+                                 s3bc40.com`;
+
+const highlights = ['git push', 'OIDC → AWS STS', 'OAC', 'HTTPS TLS 1.3', 's3bc40.com'];
+
+function highlight(text: string, terms: string[]): string {
+  let out = text.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c] ?? c));
+  for (const term of terms) {
+    out = out.replaceAll(term, `<span class="hl">${term}</span>`);
+  }
+  return out;
+}
+---
+
+<section id="architecture">
+  <div class="container-projects">
+    <p class="section-label">// infrastructure</p>
+
+    <p class="arch-summary">
+      Static site. Private S3 origin. CloudFront CDN. OIDC auth. No stored credentials.
+    </p>
+
+    <div class="arch-block" role="img" aria-label="Infrastructure architecture diagram">
+      <pre set:html={highlight(diagram, highlights)} />
+    </div>
+  </div>
+</section>
+
+<style>
+  #architecture {
+    padding-block: 4.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .arch-summary {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+  }
+
+  .arch-block {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.5rem 2rem;
+    overflow-x: auto;
+  }
+
+  .arch-block pre {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--muted);
+    white-space: pre;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .arch-block :global(.hl) {
+    color: var(--accent);
+  }
+
+  /* ── Responsive ─────────────────────────────── */
+  @media (max-width: 479px) {
+    #architecture {
+      padding-block: 3.5rem;
+    }
+
+    .arch-block {
+      padding: 1.25rem;
+    }
+  }
+</style>
