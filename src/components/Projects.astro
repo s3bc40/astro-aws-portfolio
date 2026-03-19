@@ -20,13 +20,13 @@ const projects: Project[] = [
     name: 'DevBrief',
     lang: 'Python',
     path: '~/projects/devbrief',
-    description: 'Generates a human-readable brief for any GitHub repo. AI-powered, PyPI published.',
-    buildNote: 'Built in a day with Claude Code.',
+    description: 'Developer intelligence suite. GitHub repo analysis, log dashboard, and credential management. CLI on PyPI, async FastAPI + HTMX, Claude API.',
+    buildNote: 'Active project — v0.3.0, sprint ongoing.',
     links: [
       { label: 'GitHub ↗', href: 'https://github.com/s3bc40/devbrief' },
       { label: 'PyPI ↗',   href: 'https://pypi.org/project/devbrief' },
     ],
-    command: 'uvx devbrief <github-url>',
+    command: 'uv tool install devbrief',
   },
   {
     name: 'txdecode',
