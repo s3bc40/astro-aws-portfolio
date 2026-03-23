@@ -24,7 +24,7 @@ Live at `https://www.s3bc40.com`.
 | DNS         | Vercel DNS → CloudFront CNAME |
 | Sitemap     | `@astrojs/sitemap` — auto-generated at build |
 
-**Never introduce a UI framework (React, Vue, Svelte) or a CSS framework (Tailwind, etc.).**
+**Never introduce a UI framework (React, Vue, Svelte) or a CSS framework (Tailwind, etc.) into this portfolio's codebase.** These may appear in the Stack section as technologies used in other projects — that's fine.
 
 ---
 
@@ -123,7 +123,7 @@ Hero → About → Stack → Projects → Architecture → Contact
 - Two-column on desktop, single-column on mobile (dt turns amber)
 
 ### Stack
-- Five rows: Languages · Frontend · Backend · Cloud · Tooling
+- Six rows: Languages · Frontend · Backend · Cloud · AI · Tooling
 - Chips: `--surface` bg, `--border` border, hover → amber border + text
 - Grid layout: `100px` label column + `1fr` chips column
 
