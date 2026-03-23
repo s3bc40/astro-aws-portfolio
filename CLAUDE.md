@@ -89,7 +89,7 @@ src/
     └── 404.astro            — terminal-themed error page
 
 public/
-├── og.png                   — 1200×630 social card (placeholder, replace before launch)
+├── og.png                   — 1200×630 social card (programmatic placeholder, replace with designed asset)
 └── robots.txt               — allow all, points to sitemap-index.xml
 ```
 
@@ -133,7 +133,7 @@ Hero → About → Stack → Projects → Architecture → Contact
 - Left `3px` border in `--accent-dim` at rest, full border + left → `--accent` on hover
 - Box-shadow lifts cards, tints amber on hover
 - Coming soon card: `opacity: 0.4`, no hover
-- **Current projects:** DevBrief [Python], txdecode [Rust], [Next project] (coming soon)
+- **Current projects:** devbrief [Python], devisio.dev [TypeScript], txdecode [Rust], [Next project] (coming soon)
 
 ### Architecture
 - ASCII pipeline diagram: GitHub → Actions → S3 → CloudFront → s3bc40.com

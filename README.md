@@ -5,7 +5,7 @@ Live at [s3bc40.com](https://www.s3bc40.com)
 
 ## Stack
 
-- **Framework**: Astro 5 (static output, zero JS framework)
+- **Framework**: Astro 6 (static output, zero JS framework)
 - **Fonts**: Inter + JetBrains Mono
 - **Deployment**: AWS S3 + CloudFront
 - **CI/CD**: GitHub Actions with OIDC authentication (no static credentials)
