@@ -20,8 +20,8 @@ const projects: Project[] = [
     name: 'devbrief',
     lang: 'Python',
     path: '~/projects/devbrief',
-    description: 'Developer intelligence suite. GitHub repo analysis, log dashboard, and credential management. CLI on PyPI, async FastAPI + HTMX, Claude API.',
-    buildNote: 'Active project — v0.3.0, sprint ongoing.',
+    description: 'Python CLI for developer situational awareness. Rust bridge via maturin/PyO3, GitHub Actions CI with OIDC PyPI publishing.',
+    buildNote: 'Active project — v0.5.0, sprint ongoing.',
     links: [
       { label: 'GitHub ↗', href: 'https://github.com/s3bc40/devbrief' },
       { label: 'PyPI ↗',   href: 'https://pypi.org/project/devbrief' },
@@ -32,8 +32,7 @@ const projects: Project[] = [
     name: 'devisio.dev',
     lang: 'TypeScript',
     path: '~/projects/devisio.dev',
-    description: 'Voice-first SaaS landing page for Devisio — quote generation tool for French craftsmen. Pre-launch waitlist with email capture.',
-    buildNote: 'Built with Claude Code.',
+    description: 'MVP in progress. Sole developer, full stack: Terraform IaC, Next.js 15 frontend, Lambda + FastAPI + DynamoDB + Cognito + Voxtral (Mistral audio) + S3.',
     links: [
       { label: 'GitHub ↗', href: 'https://github.com/devisio-hq/devisio.dev' },
       { label: 'devisio.dev ↗', href: 'https://www.devisio.dev' },
@@ -50,11 +49,32 @@ const projects: Project[] = [
     ],
   },
   {
-    name: '[Next project]',
-    lang: '?',
-    path: '~/projects/...',
-    description: 'Coming soon.',
-    comingSoon: true,
+    name: 'otomais-memory',
+    lang: 'Python',
+    path: '~/projects/otomais-memory',
+    description: 'Django 5.2 + DRF + FastMCP. MCP server exposing a Dofus encyclopedia — items, sets, equipment — via search and detail tools. pytest-django test suite, GitHub Actions CI. Local SQLite, PostgreSQL on AWS target.',
+    links: [
+      { label: 'GitHub ↗', href: 'https://github.com/s3bc40/otomais-memory' },
+    ],
+  },
+  {
+    name: 'RoastDev',
+    lang: 'TypeScript',
+    path: '~/projects/roastdev',
+    description: 'Developer quiz app built in 5 days as a live technical demo. React + Node + Socket.io + MongoDB. Real-time multiplayer, live scoring.',
+    links: [
+      { label: 'GitHub ↗', href: 'https://github.com/s3bc40/roastdev' },
+    ],
+  },
+  {
+    name: 'kiji-proxy — Dataiku',
+    lang: 'Go',
+    path: '~/projects/kiji-proxy',
+    description: 'Open source contribution to Dataiku\'s ML platform proxy. XDG config handling for Linux environments. Ongoing collaboration.',
+    links: [
+      { label: 'GitHub ↗',      href: 'https://github.com/dataiku/kiji-proxy' },
+      { label: 'Fork ↗',        href: 'https://github.com/s3bc40/kiji-proxy' },
+    ],
   },
 ];
 ---
